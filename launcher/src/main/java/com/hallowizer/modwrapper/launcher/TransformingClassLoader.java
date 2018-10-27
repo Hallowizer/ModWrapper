@@ -135,7 +135,7 @@ public final class TransformingClassLoader extends URLClassLoader {
 		return name;
 	}
 	
-	private String untransformName(String name) {
+	public String untransformName(String name) {
 		for (IRenamingClassTransformer transformer : reverseNameTransformers)
 			name = transformer.untransformName(name);
 		

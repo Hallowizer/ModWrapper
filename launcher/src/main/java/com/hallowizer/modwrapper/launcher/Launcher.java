@@ -98,7 +98,7 @@ public class Launcher {
 		loader.injectData(args, version, gameDir);
 		loader.configureClassLoader(classLoader);
 		
-		String mainName = loader.getMainClass();
+		String mainName = classLoader.untransformClassName(loader.getMainClass());
 		Class<?> mainClass = Class.forName(mainName, true, classLoader);
 		Method main = mainClass.getDeclaredMethod("main", String[].class);
 		String[] launchArgs = args.toArray(new String[args.size()]);

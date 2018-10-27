@@ -79,4 +79,8 @@ public final class ManagerClassLoader extends ConfigurableClassLoader implements
 	public void registerTransformer(IClassTransformer transformer) {
 		innerLoader.registerTransformer(transformer);
 	}
+	
+	public String untransformClassName(String name) {
+		return innerLoader.untransformName(name);
+	}
 }

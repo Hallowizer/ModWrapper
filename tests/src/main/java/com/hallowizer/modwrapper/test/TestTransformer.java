@@ -52,7 +52,8 @@ public final class TestTransformer implements IRenamingClassTransformer {
 		if (name.equals("com.hallowizer.modwrapper.test.inner.PartTransformedTestTarget")) {
 			LaunchLog.debug("Untransforming name PartTransformedTestTarget -> TestTarget");
 			return "com.hallowizer.modwrapper.test.inner.TestTarget";
-		}
+		} else if (name.equals("com.hallowizer.modwrapper.test.inner.TransformedTestLaunched"))
+			return "com.hallowizer.modwrapper.test.inner.TestLaunched";
 		
 		return name;
 	}

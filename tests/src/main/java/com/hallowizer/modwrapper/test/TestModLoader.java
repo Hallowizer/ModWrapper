@@ -25,6 +25,6 @@ public final class TestModLoader implements IModLoader {
 	
 	@Override
 	public String getMainClass() {
-		return "com.hallowizer.modwrapper.test.inner.TestLaunched";
+		return "com.hallowizer.modwrapper.test.inner.TransformedTestLaunched";
 	}
 }
