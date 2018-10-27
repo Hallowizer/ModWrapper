@@ -9,7 +9,9 @@ furnished to do so, subject to the following conditions:
 
 1. The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
-2. When distributing subpackages of com.hallowizer.modwrapper.repackage (present in binary form only), their license conditions also take effect. You should have received their licenses together with this license.
+2. When distributing subpackages of com.hallowizer.modwrapper.repackage (present in
+binary form only), their license conditions also take effect. You should have 
+received their licenses together with this license.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
