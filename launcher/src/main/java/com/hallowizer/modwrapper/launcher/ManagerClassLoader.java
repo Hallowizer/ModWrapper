@@ -11,18 +11,23 @@ import com.hallowizer.modwrapper.api.IClassTransformer;
 import com.hallowizer.modwrapper.launcher.parentloaded.IManagerClassLoader;
 import com.hallowizer.modwrapper.launcher.parentloaded.NonTransformingClassLoader;
 
+import lombok.SneakyThrows;
+
 public final class ManagerClassLoader extends ConfigurableClassLoader implements IManagerClassLoader {
 	private final NonTransformingClassLoader outerLoader;
 	private final TransformingClassLoader innerLoader;
 	
-	private final ExclusionSet transformerExclusions = new ExclusionSet();
-	private final ExclusionSet transformerInclusions = new ExclusionSet();
+	private final ExclusionSet transformerExclusions = new ExclusionSet("transformerExclusions");
+	private final ExclusionSet transformerInclusions = new ExclusionSet("transformerInclusions");
 	
 	private final List<URL> sources = new ArrayList<>();
 	
+	@SneakyThrows
 	public ManagerClassLoader(NonTransformingClassLoader classLoader) {
 		this.outerLoader = classLoader;
 		this.innerLoader = new TransformingClassLoader(this, outerLoader);
+		
+//		outerLoader.loadDirect("com.hallowizer.modwrapper.launcher.LaunchLog"); // Preload this. // No need to preload, because it is loaded in Launcher
 		
 		sources.addAll(Arrays.asList(outerLoader.getSources()));
 		outerLoader.setManagerLoader(this);

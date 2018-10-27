@@ -69,9 +69,11 @@ public final class TransformingClassLoader extends URLClassLoader {
 		try {
 			URLConnection connection;
 			try {
-				connection = findResource("/" + resource).openConnection();
+				connection = findResource(resource).openConnection();
 				connection.getClass(); // Null test
 			} catch (NullPointerException e) {
+				LaunchLog.debug("Got NPE when getting resource of class " + untransformedName + " (" + transformedName + ")");
+				LaunchLog.debug(e);
 				throw new ClassNotFoundException(name);
 			}
 			
@@ -112,9 +114,10 @@ public final class TransformingClassLoader extends URLClassLoader {
 			if (classData == null)
 				throw new ClassNotFoundException(name);
 			
-			byte[] transformedData = transformClass(name, transformedName, classData);
+			byte[] transformedData = transformClass(untransformedName, transformedName, classData);
 			CodeSource source = new CodeSource(connection.getURL(), signers);
 			
+			LaunchLog.debug("Defining transformed class " + transformedName);
 			Class<?> clazz = defineClass(transformedName, transformedData, 0, transformedData.length, source);
 			classCache.put(transformedName, clazz);
 			return clazz;
@@ -155,7 +158,7 @@ public final class TransformingClassLoader extends URLClassLoader {
 	}
 	
 	public byte[] getClassData(String name) {
-		String path = "/" + name.replace('.', '/') + ".class";
+		String path = name.replace('.', '/') + ".class";
 		
 		try {
 			InputStream in;
@@ -169,6 +172,8 @@ public final class TransformingClassLoader extends URLClassLoader {
 			in.read(buf);
 			return buf;
 		} catch (IOException e) {
+			LaunchLog.debug("Got IOE when getting class bytes of " + name);
+			LaunchLog.debug(e);
 			return null;
 		}
 	}

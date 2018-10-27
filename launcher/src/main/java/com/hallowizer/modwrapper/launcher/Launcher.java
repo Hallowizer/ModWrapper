@@ -23,6 +23,7 @@ public class Launcher {
 		
 		Class<?> clazz = Class.forName("com.hallowizer.modwrapper.launcher.Launcher", true, classLoader);
 		Method continueInsideClassLoader = clazz.getDeclaredMethod("continueInsideClassLoader", List.class, String.class, File.class, String.class);
+		continueInsideClassLoader.setAccessible(true);
 		
 		try {
 			continueInsideClassLoader.invoke(null, args, version, gameDir, modLoader);
@@ -61,8 +62,11 @@ public class Launcher {
 		return urls.toArray(new URL[urls.size()]);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@SneakyThrows
 	private void continueInsideClassLoader(List<String> args, String version, File gameDir, String modLoader) {
+		LaunchLog.debug("Inner launcher classloader: " + Launcher.class.getClassLoader().getClass().getName());
+		
 		NonTransformingClassLoader oldLoader = (NonTransformingClassLoader) Launcher.class.getClassLoader();
 		ManagerClassLoader classLoader = new ManagerClassLoader(oldLoader);
 		
@@ -75,7 +79,7 @@ public class Launcher {
 			throw new IllegalArgumentException("Attempting to use mod loader " + modLoader + ", which does not exist");
 		}
 		
-		Class<? extends IModLoader> loaderClass = clazz.asSubclass(IModLoader.class);
+		Class<? extends IModLoader> loaderClass = (Class<? extends IModLoader>) clazz; // Seriously, clazz.asSubinterface doesn't exist.
 		Constructor<? extends IModLoader> constructor;
 		
 		try {
