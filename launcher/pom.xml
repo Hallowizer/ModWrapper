@@ -31,6 +31,17 @@
 									<exclude>org.projectlombok:lombok</exclude>
 								</excludes>
 							</artifactSet>
+							
+							<relocations>
+								<relocation>
+									<pattern>com.google</pattern>
+									<shadedPattern>com.hallowizer.modwrapper.repackage.guava</shadedPattern>
+								</relocation>
+								<relocation>
+									<pattern>joptsimple</pattern>
+									<shadedPattern>com.hallowizer.modwrapper.repackage.joptsimple</shadedPattern>
+								</relocation>
+							</relocations>
 						</configuration>
 					</execution>
 				</executions>
